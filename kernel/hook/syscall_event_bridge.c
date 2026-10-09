@@ -50,17 +50,25 @@ static int ksu_handle_init_mark_tracker(const char __user **filename_user)
 
 long __nocfi ksu_hook_newfstatat(int orig_nr, const struct pt_regs *regs)
 {
+#ifdef CONFIG_KSU_SUSFS
+    if (!static_branch_likely(&ksu_su_compat_enabled))
+        return ksu_syscall_table[orig_nr](regs);
+#else
     if (!ksu_su_compat_enabled)
         return ksu_syscall_table[orig_nr](regs);
-
+#endif
     return ksu_handle_stat_sucompat(orig_nr, (struct pt_regs *)regs);
 }
 
 long __nocfi ksu_hook_faccessat(int orig_nr, const struct pt_regs *regs)
 {
+#ifdef CONFIG_KSU_SUSFS
+    if (!static_branch_likely(&ksu_su_compat_enabled))
+        return ksu_syscall_table[orig_nr](regs);
+#else
     if (!ksu_su_compat_enabled)
         return ksu_syscall_table[orig_nr](regs);
-
+#endif
     return ksu_handle_faccessat_sucompat(orig_nr, (struct pt_regs *)regs);
 }
 
@@ -99,11 +107,18 @@ static long __nocfi ksu_hook_execve_common(int orig_nr, const struct pt_regs *re
         if (ret) {
             pr_err("adb root failed: %ld\n", ret);
         }
+#ifdef CONFIG_KSU_SUSFS
+    } else if (static_branch_unlikely(&ksu_su_compat_enabled)) {
+        ret = ksu_syscall_table[orig_nr](regs);
+        ksu_sulog_emit_pending(pending_root_execve, ret, GFP_KERNEL);
+        return ret;
+#else
     } else if (ksu_su_compat_enabled) {
         ret = execveat ? ksu_handle_execveat_sucompat(filename_user, orig_nr, (struct pt_regs *)regs) :
                          ksu_handle_execve_sucompat(filename_user, orig_nr, (struct pt_regs *)regs);
         ksu_sulog_emit_pending(pending_root_execve, ret, GFP_KERNEL);
         return ret;
+#endif
     }
 
     ret = ksu_syscall_table[orig_nr](regs);
