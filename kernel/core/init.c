@@ -26,6 +26,9 @@
 #include "feature/adb_root.h"
 #include "feature/selinux_hide.h"
 #include "infra/symbol_resolver.h"
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs.h>
+#endif
 
 #if defined(__x86_64__) && !defined(CONFIG_KSU_X86_PATCH_SYSCALL_DISPATCHER)
 #include <asm/cpufeature.h>
@@ -134,6 +137,10 @@ int __init kernelsu_init(void)
 
     ksu_init_symbol_resolver();
     ksu_syscall_hook_init();
+
+#ifdef CONFIG_KSU_SUSFS
+    susfs_init();
+#endif
 
     ksu_feature_init();
     ksu_sulog_init();
