@@ -253,10 +253,10 @@ u32 susfs_get_sid_from_name(const char *secctx_name)
 
 u32 susfs_get_current_sid(void)
 {
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 14, 0)
-    const struct task_security_struct *tsec = current_security();
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 18, 0)
+    const struct task_security_struct *tsec = selinux_cred(current_cred());
 #else
-    const struct task_security_struct *tsec = current_security();
+    const struct cred_security_struct *tsec = selinux_cred(current_cred());
 #endif
     return tsec ? tsec->sid : 0;
 }
