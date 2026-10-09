@@ -33,18 +33,35 @@
 
 extern void write_sulog(uint8_t sym);
 
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#include <linux/jump_label.h>
+DEFINE_STATIC_KEY_TRUE(ksu_su_compat_enabled);
+#else
 bool ksu_su_compat_enabled __read_mostly = true;
+#endif
 
 static int su_compat_feature_get(u64 *value)
 {
+#ifdef CONFIG_KSU_SUSFS
+    *value = static_key_enabled(&ksu_su_compat_enabled) ? 1 : 0;
+#else
     *value = ksu_su_compat_enabled ? 1 : 0;
+#endif
     return 0;
 }
 
 static int su_compat_feature_set(u64 value)
 {
     bool enable = value != 0;
+#ifdef CONFIG_KSU_SUSFS
+    if (enable)
+        static_branch_enable(&ksu_su_compat_enabled);
+    else
+        static_branch_disable(&ksu_su_compat_enabled);
+#else
     ksu_su_compat_enabled = enable;
+#endif
     pr_info("su_compat: set to %d\n", enable);
     return 0;
 }
@@ -314,6 +331,79 @@ long ksu_handle_execveat_sucompat(const char __user **filename_user, int orig_nr
     return ksu_handle_execve_sucompat_common(filename_user, (const char __user *const __user *)PT_REGS_PARM3(regs),
                                              PT_REGS_SYSCALL_PARM4(regs), true, orig_nr, regs);
 }
+
+#ifdef CONFIG_KSU_SUSFS
+static const char ksud_path[] = KSUD_PATH;
+
+int ksu_handle_faccessat(int *dfd, struct filename **filename, int *mode, int *__unused_flags)
+{
+    if (!static_branch_unlikely(&ksu_su_compat_enabled))
+        return 0;
+    if (unlikely(IS_ERR(*filename) || !(*filename)->name))
+        return 0;
+    if (likely(memcmp((*filename)->name, su_path, sizeof(su_path))))
+        return 0;
+    if (!ksu_is_allow_uid_for_current(current_uid().val))
+        return 0;
+    pr_info("ksu_handle_faccessat su->sh!\n");
+    memcpy((void *)((*filename)->name), sh_path, sizeof(sh_path));
+    return 0;
+}
+
+int ksu_handle_stat(int *dfd, struct filename **filename, int *flags)
+{
+    if (!static_branch_unlikely(&ksu_su_compat_enabled))
+        return 0;
+    if (unlikely(IS_ERR(*filename) || !(*filename)->name))
+        return 0;
+    if (likely(memcmp((*filename)->name, su_path, sizeof(su_path))))
+        return 0;
+    if (!ksu_is_allow_uid_for_current(current_uid().val))
+        return 0;
+    pr_info("ksu_handle_stat su->sh!\n");
+    memcpy((void *)((*filename)->name), sh_path, sizeof(sh_path));
+    return 0;
+}
+
+int ksu_handle_execveat(int *fd, struct filename **filename_ptr, void *argv, void *envp, int *flags)
+{
+    struct filename *filename;
+    struct ksu_sulog_pending_event *pending = NULL;
+    if (unlikely(!filename_ptr || IS_ERR(*filename_ptr)))
+        return -EINVAL;
+    filename = *filename_ptr;
+    if (unlikely(!filename->name))
+        return -EINVAL;
+    if (likely(memcmp(filename->name, su_path, sizeof(su_path))))
+        return -EINVAL;
+    if (!ksu_is_allow_uid_for_current(current_uid().val))
+        return -EINVAL;
+    pr_info("ksu_handle_execveat su found, su->ksud\n");
+    if (is_ksud_exists())
+        memcpy((void *)filename->name, ksud_path, sizeof(ksud_path));
+    else
+        memcpy((void *)filename->name, sh_path, sizeof(sh_path));
+    escape_with_root_profile();
+    return 0;
+}
+
+int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr, void *argv, void *envp, int *flags)
+{
+    return ksu_handle_execveat(fd, filename_ptr, argv, envp, flags);
+}
+
+int ksu_handle_post_execveat(int *fd, struct filename **filename_ptr, void *argv, void *envp, int *flags, int *retval)
+{
+    if (*retval >= 0)
+        ksu_install_su_fd();
+    return 0;
+}
+
+int ksu_handle_post_execveat_sucompat(int *fd, struct filename **filename_ptr, void *argv, void *envp, int *flags, int *retval)
+{
+    return ksu_handle_post_execveat(fd, filename_ptr, argv, envp, flags, retval);
+}
+#endif
 
 // sucompat: permitted process can execute 'su' to gain root access.
 void __init ksu_sucompat_init()

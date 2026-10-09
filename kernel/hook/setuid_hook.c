@@ -20,13 +20,53 @@
 #include "supercall/supercall.h"
 #include "hook/tp_marker.h"
 #include "feature/kernel_umount.h"
+#include "selinux/selinux.h"
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#include <linux/workqueue.h>
+extern struct work_struct susfs_extra_works;
+#endif
+
+#ifdef CONFIG_KSU_SUSFS
+static int handle_zygote_next_setresuid(uid_t new_uid)
+{
+    if (is_isolated_process(new_uid)) {
+        susfs_set_current_proc_no_su();
+        susfs_set_current_proc_umounted();
+        susfs_set_current_proc_umounted_for_zygote_next();
+        goto do_susfs_work;
+    }
+    if (likely(is_appuid(new_uid) && ksu_uid_should_umount(new_uid))) {
+        susfs_set_current_proc_no_su();
+        susfs_set_current_proc_umounted();
+        susfs_set_current_proc_umounted_for_zygote_next();
+        goto do_susfs_work;
+    }
+    if (ksu_is_allow_uid_for_current(new_uid)) {
+        if (current->seccomp.mode == SECCOMP_MODE_FILTER && current->seccomp.filter) {
+            spin_lock_irq(&current->sighand->siglock);
+            ksu_seccomp_allow_cache(current->seccomp.filter, __NR_reboot);
+            spin_unlock_irq(&current->sighand->siglock);
+        }
+        return 0;
+    }
+    susfs_set_current_proc_no_su();
+    return 0;
+do_susfs_work:
+    if (!work_pending(&susfs_extra_works))
+        schedule_work(&susfs_extra_works);
+    return 0;
+}
+#endif
 
 int ksu_handle_setresuid(uid_t old_uid, uid_t new_uid)
 {
-    // we rely on the fact that zygote always call setresuid(3) with same uids
-
-    pr_info("handle_setresuid from %d to %d\n", old_uid, new_uid);
-
+#ifdef CONFIG_KSU_SUSFS
+    if (is_zygote_next(current_cred()))
+        handle_zygote_next_setresuid(new_uid);
+#endif
+    if (!is_zygote(current_cred()))
+        return 0;
     if (unlikely(is_uid_manager(new_uid))) {
         spin_lock_irq(&current->sighand->siglock);
         ksu_seccomp_allow_cache(current->seccomp.filter, __NR_reboot);

@@ -11,6 +11,8 @@
 #define KERNEL_SU_CONTEXT "u:r:" KERNEL_SU_DOMAIN ":s0"
 #define KSU_FILE_CONTEXT "u:object_r:" KERNEL_SU_FILE ":s0"
 #define ZYGOTE_CONTEXT "u:r:zygote:s0"
+#define ZYGOTE_NEXT_DOMAIN "u:r:zygote_next:s0"
+#define ZYGOTE_NEXT_CONTEXT ZYGOTE_NEXT_DOMAIN
 #define INIT_CONTEXT "u:r:init:s0"
 
 void setup_selinux(const char *, struct cred *);
@@ -28,6 +30,17 @@ bool is_ksu_domain();
 bool is_zygote(const struct cred *cred);
 
 bool is_init(const struct cred *cred);
+
+#ifdef CONFIG_KSU_SUSFS
+bool is_zygote_next(const struct cred *cred);
+u32 susfs_get_sid_from_name(const char *secctx_name);
+u32 susfs_get_current_sid(void);
+bool susfs_is_current_zygote_domain(void);
+bool susfs_is_current_ksu_domain(void);
+bool susfs_is_current_init_domain(void);
+extern u32 susfs_priv_app_sid;
+extern u32 susfs_ksu_sid;
+#endif
 
 void apply_kernelsu_rules();
 
