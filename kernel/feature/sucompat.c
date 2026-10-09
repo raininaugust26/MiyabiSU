@@ -95,6 +95,10 @@ static char __user *empty_user_path(void)
 }
 
 static const char su_path[] = SU_PATH;
+static const char sh_path_global[] = SH_PATH;
+static const char ksud_path_global[] = KSUD_PATH;
+#define sh_path sh_path_global
+#define ksud_path ksud_path_global
 
 static bool is_ksud_exists()
 {
@@ -326,15 +330,15 @@ long ksu_handle_execve_sucompat(const char __user **filename_user, int orig_nr, 
                                              PT_REGS_PARM3(regs), false, orig_nr, regs);
 }
 
+#ifndef CONFIG_KSU_SUSFS
 long ksu_handle_execveat_sucompat(const char __user **filename_user, int orig_nr, struct pt_regs *regs)
 {
     return ksu_handle_execve_sucompat_common(filename_user, (const char __user *const __user *)PT_REGS_PARM3(regs),
                                              PT_REGS_SYSCALL_PARM4(regs), true, orig_nr, regs);
 }
+#endif
 
 #ifdef CONFIG_KSU_SUSFS
-static const char ksud_path[] = KSUD_PATH;
-
 int ksu_handle_faccessat(int *dfd, struct filename **filename, int *mode, int *__unused_flags)
 {
     if (!static_branch_unlikely(&ksu_su_compat_enabled))
