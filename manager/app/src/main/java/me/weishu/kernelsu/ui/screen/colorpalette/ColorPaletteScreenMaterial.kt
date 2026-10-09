@@ -304,10 +304,10 @@ fun ColorPaletteScreenMaterial(
                                 Icon(
                                     painter = painterResource(
                                         id = when (mode) {
-                                            0 -> R.drawable.ic_launcher_midorisu
+                                            0 -> R.drawable.ic_launcher_miyabi
                                             1 -> R.drawable.ic_launcher_kowsu
                                             2 -> R.drawable.ic_launcher_monochrome
-                                            else -> R.drawable.ic_launcher_midorisu
+                                            else -> R.drawable.ic_launcher_miyabi
                                         }
                                     ),
                                     contentDescription = null,
@@ -318,10 +318,10 @@ fun ColorPaletteScreenMaterial(
                                 )
                                 Text(
                                     when (mode) {
-                                        0 -> stringResource(R.string.app_name_midorisu)
+                                        0 -> stringResource(R.string.app_name_miyabi)
                                         1 -> stringResource(R.string.app_name_kowsu)
                                         2 -> stringResource(R.string.app_name_official)
-                                        else -> stringResource(R.string.app_name_midorisu)
+                                        else -> stringResource(R.string.app_name_miyabi)
                                     }
                                 )
                             }
@@ -641,10 +641,10 @@ private fun ThemePreviewCard(
                     ) {
                         Text(
                             text = when (appIconMode) {
-                                0 -> stringResource(R.string.app_name_midorisu)
+                                0 -> stringResource(R.string.app_name_miyabi)
                                 1 -> stringResource(R.string.app_name_kowsu)
                                 2 -> stringResource(R.string.app_name_official)
-                                else -> stringResource(R.string.app_name_midorisu)
+                                else -> stringResource(R.string.app_name_miyabi)
                             },
                             style = MaterialTheme.typography.bodyMedium,
                             color = colorScheme.onSurface

@@ -1,1 +1,1 @@
-# MidoriSU installer/uninstaller script
+# MiyabiSU installer/uninstaller script

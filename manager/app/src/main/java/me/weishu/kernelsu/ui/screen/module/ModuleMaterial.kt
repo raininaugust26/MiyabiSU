@@ -267,7 +267,7 @@ fun ModulePagerMaterial(
     val onExportModuleClicked: (Module) -> Unit = { module ->
         exportTargetModuleId = module.id
         val cleanVersion = module.version.replace(Regex("[^a-zA-Z0-9._-]"), "_").trim('_')
-        val defaultFileName = "MidoriSU_${module.id}_${cleanVersion}.zip"
+        val defaultFileName = "MiyabiSU_${module.id}_${cleanVersion}.zip"
         exportZipLauncher.launch(defaultFileName)
     }
 

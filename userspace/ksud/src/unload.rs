@@ -5,7 +5,7 @@ use std::process::Command;
 
 use crate::utils;
 
-/// Find PIDs of processes running in the MidoriSU su domain (u:r:ksu:s0).
+/// Find PIDs of processes running in the MiyabiSU su domain (u:r:ksu:s0).
 /// Returns a list of PIDs excluding our own.
 fn find_su_domain_pids() -> Vec<i32> {
     let my_pid = std::process::id() as i32;
@@ -106,7 +106,7 @@ fn close_ksu_fds() {
 }
 
 pub fn unload() -> Result<()> {
-    info!("unload: starting MidoriSU unload sequence");
+    info!("unload: starting MiyabiSU unload sequence");
 
     // 0. Switch cgroups so we don't get killed along with our parent shell
     utils::switch_cgroups();

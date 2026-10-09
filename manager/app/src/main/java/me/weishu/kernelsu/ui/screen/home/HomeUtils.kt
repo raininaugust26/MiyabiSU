@@ -89,7 +89,7 @@ fun generateDiagnosticReport(context: Context, systemInfo: SystemInfo): String {
     } else null
 
     return buildString {
-        appendLine("### MidoriSU Diagnostic Report")
+        appendLine("### MiyabiSU Diagnostic Report")
         appendLine("- **Manager Version**: ${systemInfo.managerVersion}")
         appendLine("- **Kernel Version**: ${systemInfo.kernelVersion}")
         appendLine("- **Device Model**: ${systemInfo.deviceModel}${if (systemInfo.socInfo.isNotEmpty()) " (${systemInfo.socInfo})" else ""}")

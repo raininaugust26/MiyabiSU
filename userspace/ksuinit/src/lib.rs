@@ -402,7 +402,7 @@ fn has_kernelsu_legacy() -> bool {
         );
     }
 
-    log::info!("MidoriSU version: {}", version);
+    log::info!("MiyabiSU version: {}", version);
 
     version != 0
 }
@@ -475,7 +475,7 @@ fn has_kernelsu_v2() -> bool {
         0
     };
 
-    log::info!("MidoriSU version: {}", version);
+    log::info!("MiyabiSU version: {}", version);
 
     version != 0
 }

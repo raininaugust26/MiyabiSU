@@ -505,6 +505,6 @@
     <string name="bento_copy_report">複製診斷報告</string>
     <string name="bento_report_copied">診斷報告已複製到剪貼簿</string>
     <string name="bento_smart_pill_panic">偵測到核心崩潰記錄，點擊分析</string>
-    <string name="bento_smart_pill_update">發現新版本 MidoriSU %1$s</string>
+    <string name="bento_smart_pill_update">發現新版本 MiyabiSU %1$s</string>
     <string name="bento_smart_pill_driver_update">發現新版 KSU 驅動程式 %1$s 可用</string>
 </resources>

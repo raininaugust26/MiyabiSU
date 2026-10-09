@@ -492,7 +492,7 @@
     <string name="bento_copy_report">診断レポートをコピー</string>
     <string name="bento_report_copied">診断レポートをクリップボードにコピーしました</string>
     <string name="bento_smart_pill_panic">カーネルパニックを検出しました。タップして分析</string>
-    <string name="bento_smart_pill_update">MidoriSU %1$s の更新が利用可能です</string>
+    <string name="bento_smart_pill_update">MiyabiSU %1$s の更新が利用可能です</string>
     <string name="bento_smart_pill_driver_update">KSU ドライバー %1$s の更新が利用可能です</string>
     <string name="settings_modern_bento">モダン Bento ダッシュボード</string>
     <string name="settings_modern_bento_summary">ホーム画面にモジュール式 Bento タイルとカードダッシュボードを使用</string>

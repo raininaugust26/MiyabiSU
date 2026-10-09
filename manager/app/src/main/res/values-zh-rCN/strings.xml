@@ -503,7 +503,7 @@
     <string name="bento_copy_report">复制诊断报告</string>
     <string name="bento_report_copied">诊断报告已复制到剪贴板</string>
     <string name="bento_smart_pill_panic">检测到内核崩溃记录，点击分析</string>
-    <string name="bento_smart_pill_update">发现新版本 MidoriSU %1$s</string>
+    <string name="bento_smart_pill_update">发现新版本 MiyabiSU %1$s</string>
     <string name="bento_smart_pill_driver_update">发现新版 KSU 驱动 %1$s 可用</string>
     <string name="settings_modern_bento">现代 Bento 仪表盘</string>
     <string name="settings_modern_bento_summary">首页采用模块化 Bento 磁贴与卡片仪表盘</string>

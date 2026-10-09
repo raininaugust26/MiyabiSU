@@ -306,7 +306,7 @@ fun ColorPaletteScreenMiuix(
                             .fillMaxWidth(),
                     ) {
                         val iconModes = listOf(
-                            stringResource(R.string.app_name_midorisu),
+                            stringResource(R.string.app_name_miyabi),
                             stringResource(R.string.app_name_kowsu),
                             stringResource(R.string.app_name_official),
                         )
@@ -315,10 +315,10 @@ fun ColorPaletteScreenMiuix(
                             items = iconModes,
                             startAction = {
                                 val iconRes = when (uiState.appIconMode) {
-                                    0 -> R.drawable.ic_launcher_midorisu
+                                    0 -> R.drawable.ic_launcher_miyabi
                                     1 -> R.drawable.ic_launcher_kowsu
                                     2 -> R.drawable.ic_launcher_monochrome
-                                    else -> R.drawable.ic_launcher_midorisu
+                                    else -> R.drawable.ic_launcher_miyabi
                                 }
                                 Icon(
                                     painter = painterResource(iconRes),
@@ -689,10 +689,10 @@ private fun ThemePreviewCardMiuix(
                     ) {
                         Text(
                             text = when (appIconMode) {
-                            0 -> stringResource(R.string.app_name_midorisu)
+                            0 -> stringResource(R.string.app_name_miyabi)
                             1 -> stringResource(R.string.app_name_kowsu)
                             2 -> stringResource(R.string.app_name_official)
-                            else -> stringResource(R.string.app_name_midorisu)
+                            else -> stringResource(R.string.app_name_miyabi)
                         },
                             fontSize = 12.sp,
                             color = textColor

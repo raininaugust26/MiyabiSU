@@ -95,7 +95,7 @@ pub fn init() -> Result<()> {
     // Setup kernel log first
     setup_kmsg();
 
-    log::info!("Hello, MidoriSU!");
+    log::info!("Hello, MiyabiSU!");
 
     // mount /proc to access kernel interface
     let _dontdrop = prepare_mount();
@@ -104,7 +104,7 @@ pub fn init() -> Result<()> {
     unlimit_kmsg();
 
     if ksuinit::has_kernelsu() {
-        log::info!("MidoriSU may be already loaded in kernel, skip!");
+        log::info!("MiyabiSU may be already loaded in kernel, skip!");
     } else {
         log::info!("Loading kernelsu.ko..");
         if let Err(e) = load_module_from_path("/kernelsu.ko") {

@@ -10,20 +10,20 @@ object AppInfo {
     @Composable
     fun appName(): String {
         return when (LocalAppIconMode.current) {
-            0 -> stringResource(R.string.app_name_midorisu)
+            0 -> stringResource(R.string.app_name_miyabi)
             1 -> stringResource(R.string.app_name_kowsu)
             2 -> stringResource(R.string.app_name_official)
-            else -> stringResource(R.string.app_name_midorisu)
+            else -> stringResource(R.string.app_name_miyabi)
         }
     }
 
     @Composable
     fun appIconRes(): Int {
         return when (LocalAppIconMode.current) {
-            0 -> R.drawable.ic_launcher_midorisu
+            0 -> R.drawable.ic_launcher_miyabi
             1 -> R.drawable.ic_launcher_kowsu
             2 -> R.drawable.ic_launcher_foreground
-            else -> R.drawable.ic_launcher_midorisu
+            else -> R.drawable.ic_launcher_miyabi
         }
     }
 
@@ -33,10 +33,10 @@ object AppInfo {
     @Composable
     fun appIconMonochrome() = painterResource(
         id = when (LocalAppIconMode.current) {
-            0 -> R.drawable.ic_launcher_midorisu
+            0 -> R.drawable.ic_launcher_miyabi
             1 -> R.drawable.ic_launcher_kowsu
             2 -> R.drawable.ic_launcher_monochrome
-            else -> R.drawable.ic_launcher_midorisu
+            else -> R.drawable.ic_launcher_miyabi
         }
     )
 }

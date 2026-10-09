@@ -303,7 +303,7 @@ object Shortcut {
         val resId = when (appIconMode) {
             1 -> R.mipmap.ic_launcher_kowsu
             2 -> R.mipmap.ic_launcher_official
-            else -> R.mipmap.ic_launcher_midorisu
+            else -> R.mipmap.ic_launcher_miyabi
         }
         return getBitmapFromVectorDrawable(context, resId)
     }

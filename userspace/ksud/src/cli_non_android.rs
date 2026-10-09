@@ -5,7 +5,7 @@ use crate::boot_patch::{BootPatchArgs, BootRestoreArgs};
 use crate::lkm_image::BootPatchV2Args;
 use crate::{apk_sign, defs};
 
-/// MidoriSU cli for non-android
+/// MiyabiSU cli for non-android
 #[derive(Parser, Debug)]
 #[command(author, version = defs::VERSION_NAME, about, long_about = None)]
 struct Args {
@@ -15,10 +15,10 @@ struct Args {
 
 #[derive(clap::Subcommand, Debug)]
 enum Commands {
-    /// Patch boot or init_boot images to apply MidoriSU
+    /// Patch boot or init_boot images to apply MiyabiSU
     BootPatch(BootPatchArgs),
 
-    /// Restore boot or init_boot images patched by MidoriSU
+    /// Restore boot or init_boot images patched by MiyabiSU
     BootRestore(BootRestoreArgs),
 
     /// Patch KernelSU into a boot image

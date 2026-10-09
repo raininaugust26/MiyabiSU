@@ -492,7 +492,7 @@
     <string name="bento_copy_report">진단 보고서 복사</string>
     <string name="bento_report_copied">진단 보고서가 클립보드에 복사되었습니다</string>
     <string name="bento_smart_pill_panic">커널 패닉 로그가 감지되었습니다. 탭하여 분석</string>
-    <string name="bento_smart_pill_update">MidoriSU %1$s 업데이트 사용 가능</string>
+    <string name="bento_smart_pill_update">MiyabiSU %1$s 업데이트 사용 가능</string>
     <string name="bento_smart_pill_driver_update">KSU 드라이버 %1$s 업데이트 사용 가능</string>
     <string name="settings_modern_bento">모던 Bento 대시보드</string>
     <string name="settings_modern_bento_summary">홈 화면에 모듈식 Bento 타일 및 카드 대시보드 사용</string>

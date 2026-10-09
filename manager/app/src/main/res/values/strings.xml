@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_official" translatable="false">KernelSU</string>
-    <string name="app_name_midorisu" translatable="false">MidoriSU</string>
+    <string name="app_name_miyabi" translatable="false">MiyabiSU</string>
     <string name="app_name_kowsu" translatable="false">KowSU</string>
     <string name="settings_app_icon">App icon</string>
     <string name="home">Home</string>
@@ -509,7 +509,7 @@
     <string name="bento_copy_report">Copy Report</string>
     <string name="bento_report_copied">Diagnostic summary copied to clipboard</string>
     <string name="bento_smart_pill_panic">Kernel panic log detected, tap to analyze</string>
-    <string name="bento_smart_pill_update">MidoriSU %1$s update available</string>
+    <string name="bento_smart_pill_update">MiyabiSU %1$s update available</string>
     <string name="bento_smart_pill_driver_update">KSU Driver %1$s update available</string>
     <string name="settings_modern_bento">Modern Bento Dashboard</string>
     <string name="settings_modern_bento_summary">Use modular Bento tiles and card dashboard for home screen</string>

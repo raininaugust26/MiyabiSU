@@ -13,8 +13,8 @@
         <item name="postSplashScreenTheme">@style/Theme.KernelSU</item>
     </style>
 
-    <style name="Theme.KernelSU.Starting.Midorisu" parent="Theme.KernelSU.Starting">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_midorisu_splash</item>
+    <style name="Theme.KernelSU.Starting.Miyabi" parent="Theme.KernelSU.Starting">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_miyabi_splash</item>
     </style>
 
     <style name="Theme.KernelSU.Starting.Kowsu" parent="Theme.KernelSU.Starting">

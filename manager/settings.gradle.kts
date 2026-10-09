@@ -18,5 +18,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MidoriSU"
+rootProject.name = "MiyabiSU"
 include(":app")

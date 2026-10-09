@@ -20,12 +20,14 @@ fun AboutScreen() {
         "<b><a href=\"https://github.com/midori01/KernelSU\">GitHub</a></b>",
         "<b><a href=\"https://t.me/midori\">Telegram</a></b>"
     )
+    val baseLinks = extractLinks(htmlString)
+    val forkLink = LinkInfo("MiyabiSU fork by raininaugust26", "https://github.com/raininaugust26/MiyabiSU")
     val state = AboutUiState(
         title = stringResource(R.string.about),
         appName = AppInfo.appName(),
         appIconRes = AppInfo.appIconRes(),
         versionName = BuildConfig.VERSION_NAME,
-        links = extractLinks(htmlString),
+        links = baseLinks + forkLink,
     )
     val actions = AboutScreenActions(
         onBack = dropUnlessResumed { navigator.pop() },

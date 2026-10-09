@@ -133,9 +133,9 @@ $(info -- KSU_NEW_DCACHE_FLUSH: $(KSU_NEW_DCACHE_FLUSH))
 
 KSU_IS_PR_BUILD ?= 0
 ifeq ($(KSU_IS_PR_BUILD),0)
-KSU_PACKAGE_NAME ?= com.midori.supermanager
+KSU_PACKAGE_NAME ?= com.raininaugust26.miyabisu
 else
-KSU_PACKAGE_NAME ?= com.midori.supermanager.pr
+KSU_PACKAGE_NAME ?= com.raininaugust26.miyabisu.pr
 endif
 
 ifndef KSU_EXPECTED_SIZE

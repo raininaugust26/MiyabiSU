@@ -22,7 +22,7 @@ data class ProfileBackupItem(
 
 data class BackupPayload(
     val version: Int = 1,
-    val generator: String = "MidoriSU",
+    val generator: String = "MiyabiSU",
     val timestamp: Long = System.currentTimeMillis(),
     val defaultUmountModules: Boolean? = null,
     val profiles: List<ProfileBackupItem> = emptyList()
@@ -56,7 +56,7 @@ object ProfileBackupHelper {
 
         val rootObj = JSONObject()
         rootObj.put("version", 1)
-        rootObj.put("generator", "MidoriSU")
+        rootObj.put("generator", "MiyabiSU")
         rootObj.put("timestamp", System.currentTimeMillis())
         rootObj.put("defaultUmountModules", defaultUmount)
 
@@ -119,13 +119,13 @@ object ProfileBackupHelper {
             var defaultUmount: Boolean? = null
             var version = 1
             var timestamp = System.currentTimeMillis()
-            var generator = "MidoriSU"
+            var generator = "MiyabiSU"
 
             val profilesArray: JSONArray
             if (trimmed.startsWith("{")) {
                 val root = JSONObject(trimmed)
                 version = root.optInt("version", 1)
-                generator = root.optString("generator", "MidoriSU")
+                generator = root.optString("generator", "MiyabiSU")
                 timestamp = root.optLong("timestamp", System.currentTimeMillis())
                 if (root.has("defaultUmountModules")) {
                     defaultUmount = root.optBoolean("defaultUmountModules", true)

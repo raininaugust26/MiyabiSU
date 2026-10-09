@@ -258,7 +258,7 @@ fun SuperUserPagerMiuix(
             }
             pendingExportJson = json
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val fileName = "MidoriSU_profiles_${timestamp}.json"
+            val fileName = "MiyabiSU_profiles_${timestamp}.json"
             exportLauncher.launch(fileName)
         }
     }
@@ -272,7 +272,7 @@ fun SuperUserPagerMiuix(
                 return@launch
             }
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            clipboard?.setPrimaryClip(ClipData.newPlainText("MidoriSU Profiles", json))
+            clipboard?.setPrimaryClip(ClipData.newPlainText("MiyabiSU Profiles", json))
             showMessage(context.getString(R.string.backup_profiles_success))
         }
     }
